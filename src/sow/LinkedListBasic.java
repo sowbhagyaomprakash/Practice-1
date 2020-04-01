@@ -1,39 +1,35 @@
 package sow;
 
-class BasicNode {
+class BasicN {
 	int data;
-	BasicNode next = null;
-	
-	BasicNode(int val){
+	BasicN next = null;
+	BasicN(int val){
 		this.data = val;	
 	}
 }
-
 public class LinkedListBasic {
-BasicNode head;
-BasicNode temp;
-
+BasicN head;
+BasicN temp;
 void push(int d){
-		
      if(head == null)
-		head = new BasicNode(d);
+		head = new BasicN(d);
      else
      {
     	 temp = head;   
     	 while(temp.next != null){
      		 temp = temp.next;   	         
     	 }
-    	 BasicNode New_node = new BasicNode(d);
+    	 BasicN New_node = new BasicN(d);
          temp.next = New_node;   
      }
 }
-
 void printlinkedList() {
 	//sorting linked list
-	sortList();
-	
-	if(head == null)
+	//sortList();
+	if(head == null){
+        System.out.println("empty list");
 		return;
+	}
 	else
 	{
 		temp = head;
@@ -43,24 +39,23 @@ void printlinkedList() {
 			temp= temp.next;
 		}
  }
+	 System.out.println();
 }
 
 void sortList(){
-	
-	BasicNode current = head;
-	BasicNode next = head.next;
+	if(head == null || head.next == null) return;
+	BasicN current = head;
+	BasicN next = head.next;
 	int temp;
 	while (current != null){
-
 		while(next != null){
-			
 			if(current.data > next.data)
 			{
 	           temp = current.data;
 	           current.data = next.data;
 	           next.data = temp;
 			}
-				next = next.next;
+			   next = next.next;
 		}
 		current= current.next;
 		if(current!=null){
@@ -68,14 +63,44 @@ void sortList(){
 		}
 	}
 }
+void reverseList(){
+	
+	// for 0 and 1 node.
+	if(head == null || head.next == null)
+		return;
+	
+	// for 2 node.
+	if(head.next != null && head.next.next == null) {
+	
+		BasicN temp= head.next;
+		head.next = null;
+		temp.next = head;
+		head = temp;	
+		return;
+	}
+	
+	// For other case.
+	BasicN prev = head;
+	BasicN current = head.next;
+	BasicN temp =current.next;
+	
+	while(current.next !=null){	
+		current.next =prev;
+		prev=current;
+		current = temp;
+		temp=temp.next;
+		current.next = prev;
+	}
+	head.next = null;
+	head=current;
+}
 public static void main(String str[]){
-	
 	LinkedListBasic obj= new LinkedListBasic();
-	int[] arr = { 9,2,0,7,3,5,1,};
-	
+	int[] arr = {1,2};
 	for (int i=0;i< arr.length;i++)
 		obj.push(arr[i]);
-	
+	obj.printlinkedList();
+	obj.reverseList();
 	obj.printlinkedList();
   }
 }
